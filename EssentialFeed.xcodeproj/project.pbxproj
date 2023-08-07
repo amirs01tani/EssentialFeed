@@ -12,6 +12,7 @@
 		29270B342A815AB60050AE27 /* EssentialFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29270B332A815AB60050AE27 /* EssentialFeedTests.swift */; };
 		29270B352A815AB60050AE27 /* EssentialFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = 29270B272A815AB60050AE27 /* EssentialFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29270B3F2A815AC20050AE27 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29270B3E2A815AC20050AE27 /* FeedItem.swift */; };
+		29270B412A815BBE0050AE27 /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29270B402A815BBE0050AE27 /* FeedLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		29270B2E2A815AB60050AE27 /* EssentialFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		29270B332A815AB60050AE27 /* EssentialFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialFeedTests.swift; sourceTree = "<group>"; };
 		29270B3E2A815AC20050AE27 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
+		29270B402A815BBE0050AE27 /* FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			isa = PBXGroup;
 			children = (
 				29270B3E2A815AC20050AE27 /* FeedItem.swift */,
+				29270B402A815BBE0050AE27 /* FeedLoader.swift */,
 				29270B262A815AB60050AE27 /* EssentialFeed */,
 				29270B322A815AB60050AE27 /* EssentialFeedTests */,
 				29270B252A815AB60050AE27 /* Products */,
@@ -197,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29270B412A815BBE0050AE27 /* FeedLoader.swift in Sources */,
 				29270B3F2A815AC20050AE27 /* FeedItem.swift in Sources */,
 				29270B292A815AB60050AE27 /* EssentialFeed.docc in Sources */,
 			);
