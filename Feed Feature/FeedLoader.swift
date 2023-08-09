@@ -11,20 +11,28 @@ protocol FeedLoader {
     func load(completion: @escaping () -> Result<[FeedItem], Error>)
 }
 
-class RemoteFeedLoader {
-    var url: URL
-    var client: HTTPClient
+public class RemoteFeedLoader {
     
-    internal init(url: URL ,client: HTTPClient) {
+    private var url: URL
+    private var client: HTTPClient
+    
+    public enum Error: Swift.Error {
+        case connectivity
+    }
+    
+    public init(url: URL ,client: HTTPClient) {
         self.client = client
         self.url = url
     }
     
-    func load() {
-        client.get(from: url)
+    public func load(completion: (Error) -> Void = { _ in }) {
+        client.get(from: url, completion: { error in
+            completion(.connectivity)
+        })
     }
+  
 }
 
-protocol HTTPClient {
-    func get(from url: URL)
+public protocol HTTPClient {
+    func get(from url: URL, completion: (Error) -> Void)
 }
