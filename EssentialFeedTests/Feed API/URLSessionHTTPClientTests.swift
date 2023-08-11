@@ -18,9 +18,11 @@ class URLSessionHTTPClient {
     struct UnextectedValuesRepresentation: Error {}
     
     func get(from url: URL, completion: @escaping (HTTPClientResult)-> Void) {
-         session.dataTask(with: url) { _, _, error in
+         session.dataTask(with: url) { data, response, error in
              if let error = error {
                  completion(.failure(error))
+             } else if let data = data, data.count > 0, let response = response as? HTTPURLResponse {
+                 completion(.success(data, response))
              } else {
                  completion(.failure(UnextectedValuesRepresentation()))
              }
@@ -53,11 +55,11 @@ class URLSessionHTTPClientTests: XCTestCase {
     //         XCTAssertEqual(task.resumeCallCount, 1)
     //     }
     
-    override class func setUp() {
+    override func setUp() {
         URLProtocolStub.startInterceptingRequests()
     }
     
-    override class func tearDown() {
+    override func tearDown() {
         URLProtocolStub.stopInterceptingRequests()
     }
     
@@ -95,6 +97,25 @@ class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertNotNil(resultForError(data: anyData(), response: anyHTTPURLResponse(), error: anyNSError()))
         XCTAssertNotNil(resultForError(data: anyData(), response: nonHTTPURLResponse(), error: nil))
         
+    }
+    
+    func test_getFromURL_succedsOnHTTPULResponseData() {
+        let data = anyData()
+        let response = anyHTTPURLResponse()
+        URLProtocolStub.stub(data: data, response: response, error: nil)
+        let exp = expectation(description: "Wait for completion")
+        makeSUT().get(from: anyURL(), completion: { result in
+            switch result {
+            case .success(let receivedData, let receivedResponse):
+                XCTAssertEqual(receivedData, data)
+                XCTAssertEqual(receivedResponse.statusCode, response?.statusCode)
+            case .failure:
+                XCTFail("Expected success, but received \(result)")
+            }
+            exp.fulfill()
+        })
+        
+        wait(for: [exp], timeout: 1.0)
         
     }
     
