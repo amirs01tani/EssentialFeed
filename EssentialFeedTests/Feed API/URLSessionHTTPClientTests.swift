@@ -8,23 +8,13 @@
 import XCTest
 import EssentialFeed
 
-protocol HTTPSession {
-    func dataTask(with url: URL, completionHandler:
-    @escaping (Data?, URLResponse?, Error?) ->
-    Void) -> HTTPSessionTask
-}
-
-protocol HTTPSessionTask {
-    func resume()
-}
-
 class URLSessionHTTPClient {
-     private let session: HTTPSession
-
-     init(session: HTTPSession) {
-         self.session = session
-     }
-
+    private let session: URLSession
+    
+    init(session: URLSession = .shared) {
+        self.session = session
+    }
+    
     func get(from url: URL, completion: @escaping (HTTPClientResult)-> Void) {
          session.dataTask(with: url) { _, _, error in
              if let error = error {
@@ -32,84 +22,96 @@ class URLSessionHTTPClient {
              }
          }.resume()
      }
- }
+    
+}
 
- class URLSessionHTTPClientTests: XCTestCase {
-//     redundant
-//     func test_getFromURL_createsDataTaskWithURL() {
-//         let url = URL(string: "http://any-url.com")!
-//         let session = URLSessionSpy()
-//         let sut = URLSessionHTTPClient(session: session)
-//
-//         sut.get(from: url)
-//
-//         XCTAssertEqual(session.receivedURLs, [url])
-//     }
-     
-     func test_getFromURL_resumeDataTaskWithURL() {
-         let url = URL(string: "http://any-url.com")!
-         let session = URLSessionSpy()
-         let task = URLSessionDataTaskSpy()
-         session.stub(url: url, task: task)
-         let sut = URLSessionHTTPClient(session: session)
-
-         sut.get(from: url) { _ in }
-
-         XCTAssertEqual(task.resumeCallCount, 1)
-     }
-     
-     func test_getFromURL_failOnRequestError() {
-         let url = URL(string: "http://any-url.com")!
-         let session = URLSessionSpy()
-         let error = NSError(domain: "Test", code: 1)
-         session.stub(url: url, error: error)
-         let sut = URLSessionHTTPClient(session: session)
-         let expectation = expectation(description: "Wait for completion")
-         sut.get(from: url) { result in
-             switch result {
-             case let .failure(receivedError as NSError):
-                 XCTAssertEqual(receivedError, error)
-             default:
-                 XCTFail("Expect error for url \(url) but received \(result) instead")
-             }
-             expectation.fulfill()
-         }
-         
-         wait(for: [expectation], timeout: 1.0)
-     }
-
-     // MARK: - Helpers
-     
-     private class URLSessionSpy: HTTPSession {
-         private var stubs = [URL: Stub]()
-         
-         func stub(url: URL, task: HTTPSessionTask = FakeURLSessionDataTask(), error: Error? = nil) {
-             stubs[url] = Stub(error: error, task: task)
-         }
-         
-         struct Stub{
-             let error: Error?
-             let task: HTTPSessionTask
-         }
-         
-         func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> HTTPSessionTask {
-             guard let stub = stubs[url] else {
-                 fatalError("Couldn't find stub for the \(url)")
-             }
-             completionHandler(nil, nil, stub.error)
-             return stub.task
-         }
-     }
-
-     private class FakeURLSessionDataTask: HTTPSessionTask {
-         func resume() {}
-     }
-     private class URLSessionDataTaskSpy: HTTPSessionTask {
-         var resumeCallCount = 0
-         
-         func resume() {
-             resumeCallCount += 1
-         }
-     }
-
- }
+class URLSessionHTTPClientTests: XCTestCase {
+    //     redundant
+    //     func test_getFromURL_createsDataTaskWithURL() {
+    //         let url = URL(string: "http://any-url.com")!
+    //         let session = URLSessionSpy()
+    //         let sut = URLSessionHTTPClient(session: session)
+    //
+    //         sut.get(from: url)
+    //
+    //         XCTAssertEqual(session.receivedURLs, [url])
+    //     }
+    //     redundant
+    //     func test_getFromURL_resumeDataTaskWithURL() {
+    //         let url = URL(string: "http://any-url.com")!
+    //         let session = URLSessionSpy()
+    //         let task = URLSessionDataTaskSpy()
+    //         session.stub(url: url, task: task)
+    //         let sut = URLSessionHTTPClient(session: session)
+    //
+    //         sut.get(from: url) { _ in }
+    //
+    //         XCTAssertEqual(task.resumeCallCount, 1)
+    //     }
+    
+    func test_getFromURL_failOnRequestError() {
+        URLProtocolStub.startInterceptingRequests()
+        let url = URL(string: "http://any-url.com")!
+        let error = NSError(domain: "Test", code: 1)
+        URLProtocolStub.stub(url: url, error: error)
+        let sut = URLSessionHTTPClient()
+        let expectation = expectation(description: "Wait for completion")
+        sut.get(from: url) { result in
+            switch result {
+            case let .failure(receivedError as NSError):
+                XCTAssertEqual(receivedError.code, error.code)
+                XCTAssertEqual(receivedError.domain, error.domain)
+            default:
+                XCTFail("Expect error for url \(url) but received \(result) instead")
+            }
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    // MARK: - Helpers
+    
+    private class URLProtocolStub: URLProtocol {
+        private static var stubs = [URL: Stub]()
+        
+        static func stub(url: URL, error: Error? = nil) {
+            stubs[url] = Stub(error: error)
+        }
+        
+        struct Stub{
+            let error: Error?
+        }
+        
+        static func startInterceptingRequests() {
+            URLProtocol.registerClass(URLProtocolStub.self)
+        }
+        
+        static func stopInterceptingRequests() {
+            URLProtocol.unregisterClass(URLProtocolStub.self)
+            stubs = [:]
+        }
+        
+        override class func canInit(with request: URLRequest) -> Bool {
+            guard let url = request.url else { return false }
+            
+            return URLProtocolStub.stubs[url] != nil
+        }
+        
+        override class func canonicalRequest(for request: URLRequest) -> URLRequest {
+            return request
+        }
+        
+        override func startLoading() {
+            guard let url = request.url, let stub = URLProtocolStub.stubs[url] else { return }
+            
+            if let error = stub.error {
+                client?.urlProtocol(self, didFailWithError: error)
+            }
+            
+            client?.urlProtocolDidFinishLoading(self)
+        }
+        
+        override func stopLoading() {}
+    }
+}
