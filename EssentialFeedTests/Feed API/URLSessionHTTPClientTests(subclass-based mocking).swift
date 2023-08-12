@@ -71,6 +71,7 @@ class URLSessionHTTPClientTestsSecondApproach: XCTestCase {
     // MARK: - Helpers
     
     private class URLSessionSpy: URLSession {
+        
         private var stubs = [URL: Stub]()
         
         func stub(url: URL, task: URLSessionDataTask = FakeURLSessionDataTask(), error: Error? = nil) {
