@@ -46,6 +46,8 @@
 		2932198A2A842E2900C5E2A0 /* FeedItemMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemMapper.swift; sourceTree = "<group>"; };
 		2932198E2A843F0700C5E2A0 /* FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
 		2968F4412A86E77C0023FAEB /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
+		2968F44F2A877AAE0023FAEB /* EssentialFeedTests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = EssentialFeedTests; sourceTree = "<group>"; };
+		2968F4502A877B820023FAEB /* EssentialFeed.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = EssentialFeed.xctestplan; sourceTree = "<group>"; };
 		2996BA0E2A86326F009C0EAC /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 		2996BA102A86450F009C0EAC /* URLSessionHTTPClientTests(subclass-based mocking).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSessionHTTPClientTests(subclass-based mocking).swift"; sourceTree = "<group>"; };
 		2996BA122A864BCC009C0EAC /* URLSessionHTTPClientTests(protocol-based moching).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSessionHTTPClientTests(protocol-based moching).swift"; sourceTree = "<group>"; };
@@ -75,6 +77,8 @@
 		29270B1A2A815AB60050AE27 = {
 			isa = PBXGroup;
 			children = (
+				2968F4502A877B820023FAEB /* EssentialFeed.xctestplan */,
+				2968F44F2A877AAE0023FAEB /* EssentialFeedTests */,
 				2932198D2A843EB600C5E2A0 /* Feed API */,
 				29270B422A815CEA0050AE27 /* Feed Feature */,
 				29270B262A815AB60050AE27 /* EssentialFeed */,
