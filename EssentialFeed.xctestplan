@@ -9,12 +9,10 @@
     }
   ],
   "defaultOptions" : {
-    "codeCoverage" : false,
     "testExecutionOrdering" : "random"
   },
   "testTargets" : [
     {
-      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:EssentialFeed.xcodeproj",
         "identifier" : "29270B2D2A815AB60050AE27",
