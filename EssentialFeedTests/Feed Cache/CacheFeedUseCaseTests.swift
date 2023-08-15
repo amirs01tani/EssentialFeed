@@ -13,17 +13,18 @@ class LocalFeedLoader {
     var store: FeedStore
     private let currentDate: () -> Date
     
-    public enum Error: Swift.Error {
-        case deletionError
-    }
+//    public enum Error: Swift.Error {
+//        case deletionError
+//    }
     
     init(store: FeedStore, currentDate: @escaping () -> Date ) {
         self.store = store
         self.currentDate = currentDate
     }
     
-    func save(_ items: [FeedItem]) {
+    func save(_ items: [FeedItem], completion: @escaping (Error?) -> Void) {
         store.deleteCachedFeed(completion: { [unowned self] error in
+            completion(error)
             if error == nil {
                 self.store.insertItems(items, timeStamp: self.currentDate())
             }
@@ -73,15 +74,15 @@ final class CacheFeedUseCaseTests: XCTestCase {
     func test_save_requestCacheDeletion() {
         let (sut, store) = makeSUT()
         let item = [uniqueItem(), uniqueItem()]
-        sut.save(item)
+        sut.save(item) { _ in }
         XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed])
     }
     
-    func test_save_doesNotRequestCacheInsetionOnDeleteError() {
+    func test_save_doesNotRequestCacheInsertionOnDeleteError() {
         let (sut, store) = makeSUT()
         let item = [uniqueItem(), uniqueItem()]
-        let deletionError = LocalFeedLoader.Error.deletionError
-        sut.save(item)
+        let deletionError = anyNSError()
+        sut.save(item) { _ in }
         store.completeDeletion(with: deletionError)
         XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed])
     }
@@ -98,10 +99,26 @@ final class CacheFeedUseCaseTests: XCTestCase {
         let timeStamp = Date()
         let (sut, store) = makeSUT(currentDate: { timeStamp })
         let item = [uniqueItem(), uniqueItem()]
-        sut.save(item)
+        sut.save(item) { _ in }
         store.completeDeletionsuccessfully()
         
         XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed, .insert(item, timeStamp)])
+    }
+    
+    func test_save_failsOnDeletionError() {
+        let timeStamp = Date()
+        let (sut, store) = makeSUT(currentDate: { timeStamp })
+        let item = [uniqueItem(), uniqueItem()]
+        let deletionError = anyNSError()
+        var receivedError: Error?
+        let exp = expectation(description: "Wait till save call")
+        sut.save(item) { error in
+            receivedError = error
+            exp.fulfill()
+        }
+        store.completeDeletion(with: deletionError)
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(receivedError as NSError?, deletionError)
     }
     
     // Mark: - Helpers
@@ -120,6 +137,10 @@ final class CacheFeedUseCaseTests: XCTestCase {
     
     private func anyURL() -> URL {
         return URL(string: "http://any-url.com")!
+    }
+    
+    private func anyNSError() -> NSError {
+        return NSError(domain: "any error", code: 0)
     }
 }
 
