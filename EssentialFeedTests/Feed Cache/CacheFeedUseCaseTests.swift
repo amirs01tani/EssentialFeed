@@ -12,19 +12,36 @@ class LocalFeedLoader {
     
     var store: FeedStore
     
+    public enum Error: Swift.Error {
+        case deletionError
+    }
+    
     init(store: FeedStore) {
         self.store = store
     }
     
     func save(_ item: [FeedItem]) {
-        store.deleteCachedFeed()
+        store.deleteCachedFeed(error: { error in
+            if error != nil {
+                self.store.insertionCachedFeed()
+            }
+        })
     }
 }
 
 class FeedStore {
     var deleteCachedFeedCallCount = 0
+    var insertCallCount = 0
     
-    func deleteCachedFeed() {
+    func deleteCachedFeed(error: @escaping (Error?)-> ()) {
+        deleteCachedFeedCallCount += 1
+    }
+    
+    func completeDeletion(with: Error, index: Int = 0){
+        
+    }
+    
+    func insertionCachedFeed() {
         deleteCachedFeedCallCount += 1
     }
 }
@@ -42,6 +59,15 @@ final class CacheFeedUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT()
         let item = [uniqueItem(), uniqueItem()]
         sut.save(item)
+        XCTAssertEqual(store.deleteCachedFeedCallCount, 1)
+    }
+    
+    func test_save_doesNotRequestCacheInsetionOnDeleteError() {
+        let (sut, store) = makeSUT()
+        let item = [uniqueItem(), uniqueItem()]
+        let deletionError = LocalFeedLoader.Error.deletionError
+        sut.save(item)
+        store.completeDeletion(with: deletionError)
         XCTAssertEqual(store.deleteCachedFeedCallCount, 1)
     }
     
