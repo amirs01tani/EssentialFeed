@@ -33,21 +33,26 @@ final class CacheFeedUseCaseTests: XCTestCase {
 // first thing in recepie is delete the old cache
 // we did not delete the cached feed upon creation
     func test() {
-        let store = FeedStore()
-        let sut = LocalFeedLoader(store: store)
+        let (_, store) = makeSUT()
         XCTAssertEqual(store.deleteCachedFeedCallCount, 0)
     }
 // request cache deletion on save
     
     func test_save_requestCacheDeletion() {
-        let store = FeedStore()
-        let sut = LocalFeedLoader(store: store)
+        let (sut, store) = makeSUT()
         let item = [uniqueItem(), uniqueItem()]
-        sut.save(item: item)
+        sut.save(item)
         XCTAssertEqual(store.deleteCachedFeedCallCount, 1)
     }
     
     // Mark: - Helpers
+    
+    private func makeSUT() -> (sut: LocalFeedLoader, store: FeedStore){
+        let store = FeedStore()
+        let sut = LocalFeedLoader(store: store)
+        return (sut: sut, store: store)
+    }
+    
     private func uniqueItem() -> FeedItem {
         return FeedItem(id: UUID(), description: "any", location: "any", imageURL: anyURL())
     }
