@@ -8,40 +8,6 @@
 import XCTest
 import EssentialFeed
 
-class LocalFeedLoader {
-    
-    var store: FeedStore
-    private let currentDate: () -> Date
-    
-//    public enum Error: Swift.Error {
-//        case deletionError
-//    }
-    
-    init(store: FeedStore, currentDate: @escaping () -> Date ) {
-        self.store = store
-        self.currentDate = currentDate
-    }
-    
-    func save(_ items: [FeedItem], completion: @escaping (Error?) -> Void) {
-        store.deleteCachedFeed(completion: { [unowned self] error in
-            if error == nil {
-                self.store.insertItems(items, timeStamp: self.currentDate(), completion: completion)
-            } else {
-                completion(error)
-            }
-        })
-    }
-}
-
-protocol FeedStore {
-    typealias DeletionCompletion = (Error?) -> Void
-    typealias InsertionCompletion = (Error?) -> Void
-    func deleteCachedFeed(completion: @escaping DeletionCompletion)
-    func insertItems(_ items: [FeedItem], timeStamp: Date, completion: @escaping DeletionCompletion)
-}
-
-
-
 final class CacheFeedUseCaseTests: XCTestCase {
     // first thing in recepie is delete the old cache
     // we did not delete the cached feed upon creation
@@ -118,6 +84,16 @@ final class CacheFeedUseCaseTests: XCTestCase {
             store.completeInsertionSuccessfully()
         })
         
+    }
+    
+    func test_save_doesNotDeliverDeletionErrorAfterSUTInstanceHasBeenDeallocated() {
+        let store = FeedStoreSpy()
+        var sut: LocalFeedLoader? = LocalFeedLoader (store: store, currentDate: Date.init)
+        var receivedResults = [Error?]()
+        sut?.save([uniqueItem()]) { receivedResults.append($0) }
+        sut = nil
+        store.completeDeletion(with: anyNSError ())
+        XCTAssertTrue(receivedResults.isEmpty)
     }
     
     // Mark: - Helpers
