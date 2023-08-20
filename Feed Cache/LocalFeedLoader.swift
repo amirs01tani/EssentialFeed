@@ -21,7 +21,7 @@ final public class LocalFeedLoader {
     private var maxCachedBufferInDays: Int {
         return 7
     }
-    
+    // validations are better to be in domain model to be reusable
     private func validate(_ timestamp: Date) -> Bool {
         guard let maxCacheAge = calendar.date(byAdding: .day, value: maxCachedBufferInDays, to: timestamp) else {
             return false
