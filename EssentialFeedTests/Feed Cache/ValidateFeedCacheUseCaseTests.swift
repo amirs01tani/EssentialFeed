@@ -39,6 +39,8 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
         XCTAssertEqual (store.receivedMessages, [.retrieve])
     }
     
+    
+    
     private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
         let store = FeedStoreSpy()
         let sut = LocalFeedLoader(store: store, currentDate: currentDate)
@@ -46,33 +48,5 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
         trackForMemoryLeaks(store, file: file, line: line)
         return (sut: sut, store: store)
     }
-    
-    private func anyNSError() -> NSError {
-        return NSError(domain: "any error", code: 0)
-    }
-    
-    private func uniqueImage() -> FeedImage {
-        return FeedImage(id: UUID(), description: "any", location: "any", URL: anyURL())
-    }
-    
-    private func anyURL() -> URL {
-        return URL(string: "http://any-url.com")!
-    }
-    
-    private func uniqueImageFeed() -> (models: [FeedImage], local: [LocalFeedImage]) {
-        let models = [uniqueImage(), uniqueImage()]
-        let local = models.map { LocalFeedImage(id: $0.id, description: $0.description, location: $0.location, URL: $0.URL) }
-        return (models, local)
-    }
 
 }
-
-private extension Date {
-     func adding(days: Int) -> Date {
-         return Calendar(identifier: .gregorian).date(byAdding: .day, value: days, to: self)!
-     }
-
-     func adding(seconds: TimeInterval) -> Date {
-         return self + seconds
-     }
- }
