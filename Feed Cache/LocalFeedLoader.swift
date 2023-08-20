@@ -20,6 +20,19 @@ final public class LocalFeedLoader {
         self.currentDate = currentDate
     }
     
+    private var maxCachedBufferInDays: Int {
+        return 7
+    }
+    
+    private func validate(_ timestamp: Date) -> Bool {
+        guard let maxCacheAge = calendar.date(byAdding: .day, value: maxCachedBufferInDays, to: timestamp) else {
+            return false
+        }
+        return currentDate() < maxCacheAge
+    }
+}
+ 
+extension LocalFeedLoader {
     public func save(_ feed: [FeedImage], completion: @escaping (SaveResult) -> Void) {
         store.deleteCachedFeed(completion: { [weak self] error in
             guard let self = self else { return }
@@ -37,7 +50,26 @@ final public class LocalFeedLoader {
             completion(error)
         }
     }
+}
+
+extension LocalFeedLoader {
+    public func validateCache () {
+        store.retrieve { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .failure:
+                self.store.deleteCachedFeed { _ in }
+            case let .found(_, timestamp) where !self.validate(timestamp):
+                self.store.deleteCachedFeed { _ in }
+            case .found, .empty:
+                break
+            }
+        }
+    }
+
+}
     
+extension LocalFeedLoader {
     public func load(with completion: @escaping (LoadResult) -> Void) {
         store.retrieve { [weak self] result in
             guard let self = self else { return }
@@ -53,32 +85,8 @@ final public class LocalFeedLoader {
             }
         }
     }
-    
-    public func validateCache () {
-        store.retrieve { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .failure:
-                self.store.deleteCachedFeed { _ in }
-            case let .found(_, timestamp) where !self.validate(timestamp):
-                self.store.deleteCachedFeed { _ in }
-            case .found, .empty:
-                break
-            }
-        }
-    }
-    
-    private var maxCachedBufferInDays: Int {
-        return 7
-    }
-    
-    private func validate(_ timestamp: Date) -> Bool {
-        guard let maxCacheAge = calendar.date(byAdding: .day, value: maxCachedBufferInDays, to: timestamp) else {
-            return false
-        }
-        return currentDate() < maxCacheAge
-    }
 }
+
 
 public extension Array where Element == FeedImage {
     func toLocal() -> [LocalFeedImage] {
