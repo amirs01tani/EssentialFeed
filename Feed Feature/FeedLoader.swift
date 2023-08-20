@@ -13,6 +13,6 @@ public enum LoadFeedResult {
 }
 
 public protocol FeedLoader {
-    associatedtype Error: Swift.Error
-    func load (completion: @escaping (LoadFeedResult) -> Void)
+    typealias Result = Swift.Result<[FeedImage], Error>
+    func load(with completion: @escaping (LoadFeedResult) -> Void)
 }
