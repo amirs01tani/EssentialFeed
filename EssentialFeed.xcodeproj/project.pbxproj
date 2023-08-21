@@ -20,6 +20,12 @@
 		293D23D92A91F55500AB916A /* FeedCacheTestsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293D23D82A91F55500AB916A /* FeedCacheTestsHelpers.swift */; };
 		293D23DB2A91F5F500AB916A /* ShareTestsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293D23DA2A91F5F500AB916A /* ShareTestsHelpers.swift */; };
 		2942944F2A9282E4002B85B1 /* FeedCachePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942944E2A9282E4002B85B1 /* FeedCachePolicy.swift */; };
+		294294512A9288FF002B85B1 /* Architecture.png in Resources */ = {isa = PBXBuildFile; fileRef = 294294502A9288FF002B85B1 /* Architecture.png */; };
+		294294532A928B37002B85B1 /* Screenshot 2023-08-20 at 9.21.25 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 294294522A928B37002B85B1 /* Screenshot 2023-08-20 at 9.21.25 PM.png */; };
+		294294562A928B46002B85B1 /* Screenshot 2023-08-20 at 9.25.51 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 294294542A928B46002B85B1 /* Screenshot 2023-08-20 at 9.25.51 PM.png */; };
+		294294572A928B46002B85B1 /* Screenshot 2023-08-20 at 9.23.02 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 294294552A928B46002B85B1 /* Screenshot 2023-08-20 at 9.23.02 PM.png */; };
+		294294812A93FC29002B85B1 /* CodableFeedStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294294802A93FC29002B85B1 /* CodableFeedStoreTests.swift */; };
+		294294832A93FC41002B85B1 /* Screenshot 2023-08-20 at 9.34.14 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 294294822A93FC41002B85B1 /* Screenshot 2023-08-20 at 9.34.14 PM.png */; };
 		29682CFA2A8C31F100911A3C /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29682CF92A8C31F100911A3C /* FeedStore.swift */; };
 		29682CFC2A8C321100911A3C /* LocalFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29682CFB2A8C321100911A3C /* LocalFeedLoader.swift */; };
 		2968F4422A86E77C0023FAEB /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F4412A86E77C0023FAEB /* URLSessionHTTPClient.swift */; };
@@ -70,6 +76,12 @@
 		293D23D82A91F55500AB916A /* FeedCacheTestsHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCacheTestsHelpers.swift; sourceTree = "<group>"; };
 		293D23DA2A91F5F500AB916A /* ShareTestsHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTestsHelpers.swift; sourceTree = "<group>"; };
 		2942944E2A9282E4002B85B1 /* FeedCachePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCachePolicy.swift; sourceTree = "<group>"; };
+		294294502A9288FF002B85B1 /* Architecture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Architecture.png; sourceTree = "<group>"; };
+		294294522A928B37002B85B1 /* Screenshot 2023-08-20 at 9.21.25 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2023-08-20 at 9.21.25 PM.png"; sourceTree = "<group>"; };
+		294294542A928B46002B85B1 /* Screenshot 2023-08-20 at 9.25.51 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2023-08-20 at 9.25.51 PM.png"; sourceTree = "<group>"; };
+		294294552A928B46002B85B1 /* Screenshot 2023-08-20 at 9.23.02 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2023-08-20 at 9.23.02 PM.png"; sourceTree = "<group>"; };
+		294294802A93FC29002B85B1 /* CodableFeedStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableFeedStoreTests.swift; sourceTree = "<group>"; };
+		294294822A93FC41002B85B1 /* Screenshot 2023-08-20 at 9.34.14 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2023-08-20 at 9.34.14 PM.png"; sourceTree = "<group>"; };
 		29682CF92A8C31F100911A3C /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 		29682CFB2A8C321100911A3C /* LocalFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedLoader.swift; sourceTree = "<group>"; };
 		2968F4412A86E77C0023FAEB /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
@@ -119,6 +131,7 @@
 		29270B1A2A815AB60050AE27 = {
 			isa = PBXGroup;
 			children = (
+				294294842A940084002B85B1 /* resources */,
 				29682CF82A8C31DA00911A3C /* Feed Cache */,
 				2968F4502A877B820023FAEB /* EssentialFeed.xctestplan */,
 				2968F4A72A87D5D50023FAEB /* CI.xctestplan */,
@@ -194,6 +207,18 @@
 			path = "Feed API";
 			sourceTree = "<group>";
 		};
+		294294842A940084002B85B1 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				294294502A9288FF002B85B1 /* Architecture.png */,
+				294294522A928B37002B85B1 /* Screenshot 2023-08-20 at 9.21.25 PM.png */,
+				294294552A928B46002B85B1 /* Screenshot 2023-08-20 at 9.23.02 PM.png */,
+				294294542A928B46002B85B1 /* Screenshot 2023-08-20 at 9.25.51 PM.png */,
+				294294822A93FC41002B85B1 /* Screenshot 2023-08-20 at 9.34.14 PM.png */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
 		29682CF82A8C31DA00911A3C /* Feed Cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,6 +245,7 @@
 				298C46112A8BFA6400391C21 /* CacheFeedUseCaseTests.swift */,
 				293D23D62A91F07700AB916A /* ValidateFeedCacheUseCaseTests.swift */,
 				29A6F9E42A8E4D7700BCBFA1 /* LoadFeedFromCacheUseCaseTests.swift */,
+				294294802A93FC29002B85B1 /* CodableFeedStoreTests.swift */,
 			);
 			path = "Feed Cache";
 			sourceTree = "<group>";
@@ -355,6 +381,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294294562A928B46002B85B1 /* Screenshot 2023-08-20 at 9.25.51 PM.png in Resources */,
+				294294572A928B46002B85B1 /* Screenshot 2023-08-20 at 9.23.02 PM.png in Resources */,
+				294294832A93FC41002B85B1 /* Screenshot 2023-08-20 at 9.34.14 PM.png in Resources */,
+				294294532A928B37002B85B1 /* Screenshot 2023-08-20 at 9.21.25 PM.png in Resources */,
+				294294512A9288FF002B85B1 /* Architecture.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +440,7 @@
 				29270B342A815AB60050AE27 /* EssentialFeedTests.swift in Sources */,
 				29A6F9E52A8E4D7700BCBFA1 /* LoadFeedFromCacheUseCaseTests.swift in Sources */,
 				293D23D92A91F55500AB916A /* FeedCacheTestsHelpers.swift in Sources */,
+				294294812A93FC29002B85B1 /* CodableFeedStoreTests.swift in Sources */,
 				298C46122A8BFA6400391C21 /* CacheFeedUseCaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -560,6 +592,7 @@
 		29270B392A815AB60050AE27 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -580,8 +613,9 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.architecture.EssentialFeed;
+				PRODUCT_BUNDLE_IDENTIFIER = com.amir.architecture.EssentialFeed;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -591,6 +625,7 @@
 		29270B3A2A815AB60050AE27 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -623,13 +658,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 376VXPVV9V;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.architecture.EssentialFeedTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.amir.architecture.EssentialFeedTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 			};
@@ -639,6 +676,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 376VXPVV9V;
@@ -654,13 +692,15 @@
 		2968F4A42A87D25B0023FAEB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 376VXPVV9V;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.architecture.EssentialFeedAPIEndToEndTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.amir.architecture.EssentialFeedAPIEndToEndTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 			};
@@ -669,6 +709,7 @@
 		2968F4A52A87D25B0023FAEB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 376VXPVV9V;
