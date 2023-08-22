@@ -66,6 +66,15 @@ class CodableFeedStore: Codable {
             completion(error)
         }
     }
+    
+    func delete(completion: @escaping FeedStore.DeletionCompletion) {
+        guard FileManager.default.fileExists(atPath: storeURL.path) else {
+            return completion(nil)
+        }
+        
+        try! FileManager.default.removeItem(at: storeURL)
+        completion(nil)
+    }
 }
 
 final class CodableFeedStoreTests: XCTestCase {
@@ -153,6 +162,41 @@ final class CodableFeedStoreTests: XCTestCase {
                         "Expected cache insertion to fail with an error")
     }
     
+    func test_delete_hasNoSideEffectOnEmptyCache() {
+        let sut = makeSUT()
+        let exp = expectation(description: "Wait to call deletion")
+        var receivedError: Error?
+        sut.delete(completion: { error in
+            receivedError = error
+            exp.fulfill()
+        })
+        
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertNil(receivedError)
+        expect(sut, toRetrieve: .empty)
+        
+    }
+    
+    func test_delete_emptiesPreviouslyInsertedCache() {
+        let sut = makeSUT()
+        let exp = expectation(description: "Wait to call deletion")
+        let feed = uniqueImageFeed().local
+        let timestamp = Date ()
+        insert((feed, timestamp), to: sut)
+        var receivedError: Error?
+        sut.delete(completion: { error in
+            receivedError = error
+            exp.fulfill()
+        })
+        
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertNil(receivedError)
+        expect(sut, toRetrieve: .empty)
+        
+    }
+    
     // - MARK: Helpers
     
     private func makeSUT(storeURL: URL? = nil, file: StaticString = #file, line: UInt = #line) -> CodableFeedStore {
@@ -186,13 +230,13 @@ final class CodableFeedStoreTests: XCTestCase {
     }
     
     private func testSpecificStoreURL() -> URL {
-        return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask) .first! .appendingPathComponent ("\(type(of: self)).store")
+        return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first! .appendingPathComponent ("\(type(of: self)).store")
     }
     
     @discardableResult
     private func insert(_ cache: (feed: [LocalFeedImage], timestamp: Date), to sut: CodableFeedStore) -> Error? {
         
-        let exp = expectation (description: "Wait for cache insertion")
+        let exp = expectation(description: "Wait for cache insertion")
         var error: Error?
         sut.insert(cache.feed, timestamp: cache.timestamp) { insertionError in
             error = insertionError
