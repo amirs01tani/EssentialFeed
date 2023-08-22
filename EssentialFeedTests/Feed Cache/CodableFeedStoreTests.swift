@@ -8,7 +8,7 @@
 import XCTest
 import EssentialFeed
 
-class CodableFeedStore: Codable {
+class CodableFeedStore: FeedStore {
     
     private struct Cache: Codable {
         let feed: [CodableFeedImage]
@@ -54,11 +54,11 @@ class CodableFeedStore: Codable {
         }
     }
     
-    func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping
+    func insertItems(_ feed: [LocalFeedImage], timeStamp: Date, completion: @escaping
                 FeedStore.InsertionCompletion) {
         do {
             let encoder = JSONEncoder()
-            let cache = Cache(feed: feed.map(CodableFeedImage.init), timestamp: timestamp)
+            let cache = Cache(feed: feed.map(CodableFeedImage.init), timestamp: timeStamp)
             let encoded = try encoder.encode(cache)
             try encoded.write(to: storeURL)
             completion (nil)
@@ -67,7 +67,7 @@ class CodableFeedStore: Codable {
         }
     }
     
-    func delete(completion: @escaping FeedStore.DeletionCompletion) {
+    func deleteCachedFeed(completion: @escaping FeedStore.DeletionCompletion) {
         guard FileManager.default.fileExists(atPath: storeURL.path) else {
             return completion(nil)
         }
@@ -241,7 +241,7 @@ final class CodableFeedStoreTests: XCTestCase {
         
         let exp = expectation(description: "Wait for cache insertion")
         var error: Error?
-        sut.insert(cache.feed, timestamp: cache.timestamp) { insertionError in
+        sut.insertItems(cache.feed, timeStamp: cache.timestamp) { insertionError in
             error = insertionError
             exp.fulfill ()
         }
@@ -253,7 +253,7 @@ final class CodableFeedStoreTests: XCTestCase {
     private func delete(at sut: CodableFeedStore) -> Error? {
         let exp = expectation(description: "Wait for cache deletion")
         var error: Error?
-        sut.delete { deletionError in
+        sut.deleteCachedFeed { deletionError in
             error = deletionError
             exp.fulfill ()
         }
