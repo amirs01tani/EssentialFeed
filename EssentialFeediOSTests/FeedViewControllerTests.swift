@@ -6,25 +6,82 @@
 //
 
 import XCTest
+import UIKit
+import EssentialFeed
 
-class FeedViewController {
-
-    init(loader: FeedViewControllerTests.LoaderSpy) {
-        
+class FeedViewController: UITableViewController{
+    var loader: FeedLoader!
+    
+    convenience init(loader: FeedLoader) {
+        self.init()
+        self.loader = loader
+    }
+    
+    override func viewDidLoad() {
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector (load), for: .valueChanged)
+        load()
+    }
+    
+    @objc private func load() {
+        loader.load(with: { _ in })
     }
 }
 
 final class FeedViewControllerTests: XCTestCase {
 
     func test_init_doesNotLoadFeed() {
-        let loader = LoaderSpy()
-        let _ = FeedViewController(loader: loader)
+        let (_, loader) = makeSUT()
         
-        XCTAssertEqual (loader.loadCallCount, 0)
+        XCTAssertEqual(loader.loadCallCount, 0)
     }
-     class LoaderSpy{
+    
+    func test_viewDidLoad_loadsFeed() {
+        let (sut, loader) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        
+        XCTAssertEqual(loader.loadCallCount, 1)
+    }
+    
+    func test_pullToRefresh_loadsFeed() {
+        let (sut, loader) = makeSUT()
+        sut.loadViewIfNeeded()
+        sut.refreshControl?.simulatePullToRefresh()
+        
+        XCTAssertEqual(loader.loadCallCount, 2)
+        
+        sut.refreshControl?.simulatePullToRefresh()
+        
+        XCTAssertEqual(loader.loadCallCount, 3)
+    }
+    
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedViewController, loader: LoaderSpy) {
+        let loader = LoaderSpy()
+        let sut = FeedViewController(loader: loader)
+        
+        return (sut, loader)
+    }
+    
+    private class LoaderSpy: FeedLoader {
+        
         var loadCallCount = 0
+        
+        func load(with completion: @escaping (EssentialFeed.LoadFeedResult) -> Void) {
+            loadCallCount += 1
+        }
+        
     }
 }
 
+private extension UIRefreshControl {
+    func simulatePullToRefresh() {
+        allTargets.forEach { target in
+            actions(forTarget: target, forControlEvent:
+                    .valueChanged)?.forEach {
+                        (target as NSObject).perform(Selector($0))
+            }
+        }
+    }
+}
 
