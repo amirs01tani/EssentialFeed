@@ -25,7 +25,9 @@ class FeedViewController: UITableViewController{
     }
     
     @objc private func load() {
-        loader.load(with: { _ in })
+        loader.load(with: { [weak self] _ in
+            self?.refreshControl?.endRefreshing()
+        })
     }
 }
 
@@ -45,14 +47,14 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadCallCount, 1)
     }
     
-    func test_pullToRefresh_loadsFeed() {
+    func test_userInitiatedFeedReload_loadsFeed() {
         let (sut, loader) = makeSUT()
         sut.loadViewIfNeeded()
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedFeedReload()
         
         XCTAssertEqual(loader.loadCallCount, 2)
         
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedFeedReload()
         
         XCTAssertEqual(loader.loadCallCount, 3)
     }
@@ -62,7 +64,20 @@ final class FeedViewControllerTests: XCTestCase {
         
         sut.loadViewIfNeeded()
         
-        XCTAssertEqual (sut.refreshControl?.isRefreshing, true)
+        XCTAssertTrue(sut.isShowingLoadingIndicator)
+    }
+    
+    func test_userInitiatedFeedReload_showsLoadingIndicator() {
+        let (sut, _) = makeSUT()
+        sut.simulateUserInitiatedFeedReload()
+        XCTAssertTrue(sut.isShowingLoadingIndicator)
+    }
+
+    func test_userInitiatedFeedReload_hidesLoadingIndicatorOnLoaderCompletion() {
+        let (sut, loader) = makeSUT()
+        sut.simulateUserInitiatedFeedReload()
+        loader.completeFeedLoading()
+        XCTAssertFalse(sut.isShowingLoadingIndicator)
     }
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedViewController, loader: LoaderSpy) {
@@ -73,13 +88,31 @@ final class FeedViewControllerTests: XCTestCase {
     }
     
     private class LoaderSpy: FeedLoader {
+        private var completions = [(FeedLoader.Result) -> Void]()
         
-        var loadCallCount = 0
-        
-        func load(with completion: @escaping (EssentialFeed.LoadFeedResult) -> Void) {
-            loadCallCount += 1
+        var loadCallCount: Int {
+            return completions.count
         }
         
+        func load(with completion: @escaping (FeedLoader.Result) -> Void) {
+            completions.append(completion)
+        }
+        
+        func completeFeedLoading() {
+            completions[0](.success([]))
+        }
+        
+    }
+}
+
+private extension FeedViewController {
+    // DSL
+    func simulateUserInitiatedFeedReload() {
+        refreshControl?.simulatePullToRefresh()
+    }
+    // DSL
+    var isShowingLoadingIndicator: Bool {
+        return refreshControl!.isRefreshing == true
     }
 }
 
