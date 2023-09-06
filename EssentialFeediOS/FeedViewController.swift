@@ -66,8 +66,11 @@ public class FeedViewController: UITableViewController{
         cell.feedImageRetryButton.isHidden = true
         tasks[indexPath] = imageLoader?.loadImageData(from: cellModel.URL) { [weak cell] result in
             switch result {
-            case .success(let imageData):
-                cell?.feedImageView.image = UIImage(data: imageData)
+            case .success:
+                let data = try? result.get()
+                let image = data.map(UIImage.init) ?? nil
+                cell?.feedImageView.image = image
+                cell?.feedImageRetryButton.isHidden = (image != nil)
             case .failure:
                 cell?.feedImageRetryButton.isHidden = false
             }
