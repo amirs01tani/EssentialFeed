@@ -5,6 +5,7 @@
 //  Created by Amir on 9/7/23.
 //
 import EssentialFeediOS
+import Foundation
 
 extension FeedImageCell {
     var isShowingLocation: Bool {
