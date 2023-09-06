@@ -14,7 +14,7 @@ extension FeedViewController {
     }
     // DSL
     var isShowingLoadingIndicator: Bool {
-        return refreshControl!.isRefreshing == true
+        return refreshControl?.isRefreshing == true
     }
     
     func numberOfRenderedFeedImageViews() -> Int {
