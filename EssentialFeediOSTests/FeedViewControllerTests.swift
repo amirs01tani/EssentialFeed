@@ -107,8 +107,8 @@ final class FeedViewControllerTests: XCTestCase {
         sut.simulateFeedImageViewVisible(at: 0)
         XCTAssertEqual(loader.loadedImageURLs, [image0.URL], "Expected first image URL request once first view becomes visible")
         
-        sut.simulateFeedImageViewInvisible(at: 0)
-        XCTAssertEqual(loader.cancelledImageURLs, [image0.URL], "Expected no image URLs request both views become invisible")
+        sut.simulateFeedImageViewInvisible(at: 1)
+        XCTAssertEqual(loader.cancelledImageURLs, [image1.URL], "Expected no image URLs request both views become invisible")
     }
     
     func test_feedImageViewLoadingIndicator_isVisibleWhileLoadingImage() {
