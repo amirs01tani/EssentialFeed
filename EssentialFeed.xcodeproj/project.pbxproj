@@ -180,8 +180,6 @@
 			children = (
 				294294842A940084002B85B1 /* resources */,
 				29682CF82A8C31DA00911A3C /* Feed Cache */,
-				2968F4502A877B820023FAEB /* EssentialFeed.xctestplan */,
-				2968F4A72A87D5D50023FAEB /* CI.xctestplan */,
 				2932198D2A843EB600C5E2A0 /* Feed API */,
 				29270B422A815CEA0050AE27 /* Feed Feature */,
 				29270B262A815AB60050AE27 /* EssentialFeed */,
@@ -217,6 +215,7 @@
 		29270B322A815AB60050AE27 /* EssentialFeedTests */ = {
 			isa = PBXGroup;
 			children = (
+				2968F4502A877B820023FAEB /* EssentialFeed.xctestplan */,
 				298C46102A8BF9F500391C21 /* Feed Cache */,
 				29270B332A815AB60050AE27 /* EssentialFeedTests.swift */,
 				2932198C2A843E8C00C5E2A0 /* Feed API */,
@@ -286,6 +285,7 @@
 		2968F49D2A87D25B0023FAEB /* EssentialFeedAPIEndToEndTests */ = {
 			isa = PBXGroup;
 			children = (
+				2968F4A72A87D5D50023FAEB /* CI.xctestplan */,
 				2968F49E2A87D25B0023FAEB /* EssentialFeedAPIEndToEndTests.swift */,
 			);
 			path = EssentialFeedAPIEndToEndTests;
