@@ -7,7 +7,7 @@
 
 import UIKit
 
- extension UIControl {
+extension UIControl {
      func simulate(event: UIControl.Event) {
          allTargets.forEach { target in
              actions(forTarget: target, forControlEvent: event)?.forEach {

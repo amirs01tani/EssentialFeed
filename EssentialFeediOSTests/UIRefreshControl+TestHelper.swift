@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-private extension UIRefreshControl {
+extension UIRefreshControl {
     func simulatePullToRefresh() {
         simulate(event: .valueChanged)
     }

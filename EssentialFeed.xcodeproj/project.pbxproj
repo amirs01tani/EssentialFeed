@@ -35,6 +35,8 @@
 		295FF67C2AA91AD10095A89F /* UIRefreshControl+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295FF67B2AA91AD10095A89F /* UIRefreshControl+TestHelper.swift */; };
 		295FF67E2AA91B310095A89F /* UIButton+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295FF67D2AA91B310095A89F /* UIButton+TestHelper.swift */; };
 		295FF6802AA91BC00095A89F /* UIControl+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295FF67F2AA91BC00095A89F /* UIControl+TestHelpers.swift */; };
+		295FF6822AA91C370095A89F /* FeedViewController+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295FF6812AA91C370095A89F /* FeedViewController+TestHelpers.swift */; };
+		295FF6842AA91C4C0095A89F /* ImageFeedCell+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295FF6832AA91C4C0095A89F /* ImageFeedCell+TestHelpers.swift */; };
 		29682CFA2A8C31F100911A3C /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29682CF92A8C31F100911A3C /* FeedStore.swift */; };
 		29682CFC2A8C321100911A3C /* LocalFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29682CFB2A8C321100911A3C /* LocalFeedLoader.swift */; };
 		2968F4422A86E77C0023FAEB /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2968F4412A86E77C0023FAEB /* URLSessionHTTPClient.swift */; };
@@ -119,6 +121,8 @@
 		295FF67B2AA91AD10095A89F /* UIRefreshControl+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+TestHelper.swift"; sourceTree = "<group>"; };
 		295FF67D2AA91B310095A89F /* UIButton+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+TestHelper.swift"; sourceTree = "<group>"; };
 		295FF67F2AA91BC00095A89F /* UIControl+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+TestHelpers.swift"; sourceTree = "<group>"; };
+		295FF6812AA91C370095A89F /* FeedViewController+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedViewController+TestHelpers.swift"; sourceTree = "<group>"; };
+		295FF6832AA91C4C0095A89F /* ImageFeedCell+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageFeedCell+TestHelpers.swift"; sourceTree = "<group>"; };
 		29682CF92A8C31F100911A3C /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 		29682CFB2A8C321100911A3C /* LocalFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedLoader.swift; sourceTree = "<group>"; };
 		2968F4412A86E77C0023FAEB /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
@@ -347,6 +351,8 @@
 				295FF67D2AA91B310095A89F /* UIButton+TestHelper.swift */,
 				295FF67F2AA91BC00095A89F /* UIControl+TestHelpers.swift */,
 				295FF67B2AA91AD10095A89F /* UIRefreshControl+TestHelper.swift */,
+				295FF6812AA91C370095A89F /* FeedViewController+TestHelpers.swift */,
+				295FF6832AA91C4C0095A89F /* ImageFeedCell+TestHelpers.swift */,
 				295FF6792AA91A660095A89F /* UIImage+TestHelpers.swift */,
 				29779A972AA67298001E9937 /* EssentialFeediOSTests.xctestplan */,
 			);
@@ -660,10 +666,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				295FF6842AA91C4C0095A89F /* ImageFeedCell+TestHelpers.swift in Sources */,
 				295FF67C2AA91AD10095A89F /* UIRefreshControl+TestHelper.swift in Sources */,
 				295FF67E2AA91B310095A89F /* UIButton+TestHelper.swift in Sources */,
 				29779A8F2AA6702A001E9937 /* FeedViewControllerTests.swift in Sources */,
 				295FF6802AA91BC00095A89F /* UIControl+TestHelpers.swift in Sources */,
+				295FF6822AA91C370095A89F /* FeedViewController+TestHelpers.swift in Sources */,
 				295FF67A2AA91A670095A89F /* UIImage+TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
