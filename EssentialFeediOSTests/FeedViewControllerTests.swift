@@ -63,7 +63,7 @@ final class FeedViewControllerTests: XCTestCase {
     
     func test_loadFeedCompletion_errorHasNoSideEffectOnLoadedData() {
         let image0 = makeImage(description: "a description", location: "a location")
-        let image1 = makeImage(description: nil, location: "another location")
+    
         let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
